@@ -21,8 +21,9 @@ export class AppComponent implements OnInit {
 
 
   async ngOnInit(): Promise<void> {
-    let res = await this.tablaService.getAllUsers() 
-    this.dataUsers = res as users[] 
+    let res = await this.tablaService.getAllUsers();  
+    this.dataUsers = res as users[]; 
+    console.log(this.dataUsers); 
   }
 
 

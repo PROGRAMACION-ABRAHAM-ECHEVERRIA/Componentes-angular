@@ -10,7 +10,7 @@ export class TablaServiceService {
 
   getAllUsers():Promise<users[] | undefined>{ 
     return new Promise((resolve, reject)=>{ 
-      this.http.get<users[]>('https://jsonplaceholder.typicode.com/users').subscribe({ 
+      this.http.get<users[]>('https://jsonplaceholder.typicode.com/posts/1/comments').subscribe({ 
         next: (data)=>{  
           resolve(data)
         },
@@ -21,6 +21,8 @@ export class TablaServiceService {
       })
     })
   } 
+
+
 
   
 //   async catchError(service:Promise<object[]>){ 

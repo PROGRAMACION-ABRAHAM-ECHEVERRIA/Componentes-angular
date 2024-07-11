@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { TablaServiceService } from './tabla-service.service';
 import { users } from '../../types/users';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-tabla',
@@ -54,8 +55,49 @@ export class TablaComponent implements OnInit, OnChanges {
 
   searchDataOrColumn(dataName: string, e:Event){ 
     let eventInputText = e.target as HTMLInputElement  
-    let filterData = this.DataTable.filter((data)=>data[dataName].toLocaleLowerCase().includes(eventInputText.value.toLocaleLowerCase())); 
+
+    // validamos si existen concidencias con los buscadores
+    let filterData = this.DataTable.filter((data)=>{   
+      // convertimos todos los valores a cadenas de string, ya que pueden llegar valores numericos desde una API
+      return String(data[dataName]).toLocaleLowerCase().includes(String(eventInputText.value.toLocaleLowerCase()))
+    }); 
 
     this.RenderDataTable = filterData
+  } 
+
+  private filtersCache: {namePropiedad: string, value: string}[] = [];  
+   
+  handleSelectedFilter(e:Event, ValueSearch: string,){ 
+    let inputSelect = e.target as HTMLSelectElement; 
+
+    let validateExistProp = this.filtersCache.find((data)=> data.namePropiedad === ValueSearch)
+    if(!validateExistProp){ 
+      this.filtersCache.push({namePropiedad: ValueSearch, value: inputSelect.value});   
+    }else{  
+      console.log('reemplazando')
+      // reemplazar el valor del filtro anterior por el actual
+      this.filtersCache.forEach
+    }
+    // console.log(this.filtersCache)
+
+    let dataFilterRender = this.DataTable; 
+    this.filtersCache.forEach((dataFilters)=>{ 
+     dataFilterRender =  dataFilterRender.filter((dataRender) => { 
+       return String(dataRender[dataFilters.namePropiedad]) === dataFilters.value 
+      })
+    });  
+
+    this.RenderDataTable = dataFilterRender
+
+
+
+
+    // console.log(ValueSearch); 
+
+    // let dataFilterSearch = this.DataTable.filter((dataRender)=>{   
+    //   return String(dataRender[ValueSearch]) === inputSelect.value 
+    // }); 
+
+    // this.RenderDataTable = dataFilterSearch
   }
 }

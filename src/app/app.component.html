@@ -1,15 +1,16 @@
 <div class="p-8" > 
   <app-tabla 
     [DataTable]="dataUsers" 
-    [ColumnAndRowData]="[ 
+    [ColumnAndRowData]="[  
+      ['Folio', 'id'],
+      ['Userid', 'postId'],
       ['Nombre', 'name'], 
-      ['Telefono', 'phone'], 
-      ['Usuario', 'username'], 
-      ['Sitio', 'website']
+      ['Email', 'email'], 
+      ['Body', 'body'],
       ]"
     [Filters]="[
-      ['name', 'name', dataUsers], 
-      ['username', 'username', dataUsers]
+      ['id', 'id', dataUsers], 
+      ['nombre', 'comun', [{comun: 1, nombre:'Comun'}], 'postId']
       ]"
     [activeSearchInputColumn]="true" 
     [activeSearchInputGlobal]="true"

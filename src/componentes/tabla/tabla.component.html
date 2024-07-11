@@ -19,25 +19,31 @@
 
         <div class="w-8/12 flex gap-3" > 
             @for (filter of Filters; track $index) { 
-                <select name="" id="" class="border 
+                <select 
+                    name="" 
+                    id=""  
+                    (change)="handleSelectedFilter($event,filter[3]? filter[3]: filter[1])"
+                    class="border 
                     border-l 
                     border-gray-400 
                     rounded-md 
                     inputCustome 
                     bg-slate-200 
                     p-2 w-full" >   
-                    <!-- accedemos y recorremos la posicion 2 del array que debera ser un array de objetos para renderizar la informacion -->
+                        <option value="" selected>Selecciona</option> 
                     @for (dataFilter of filter[2]; track $index) {  
-                        <!-- consultamos los valores del array de objetos con la posicion 0 siendo lo que va renderizar el select --> 
-                        <!-- y la posicion 1 siendo lo que va tomar el value del select -->
                         <option [value]="dataFilter[filter[1]]"> 
                             {{dataFilter[filter[0]]}}
                         </option>
                     }
                 </select> 
             } 
-        </div> 
-        
+        </div>  
+        <!-- filter[0]valor de la informacion que renderizara las options -->
+        <!-- filter[1]valor que se agregara en el value  --> 
+        <!-- filter[2]la informacion que recorreran los filtros --> 
+        <!-- filter[3] este valor es opcional, se usa en caso de que la propiedad del filtro que estemos buscando no se encuentre en el array de informacion de la tabla, por lo cual usamos la tercera posicion para añadir el nombre que queramos consumir -->
+
     </div> 
     <table class="tabla" > 
         <thead> 
