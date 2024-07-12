@@ -1,4 +1,5 @@
 <div class="p-8" > 
+
   <app-tabla 
     [DataTable]="dataUsers" 
     [ColumnAndRowData]="[  
@@ -10,11 +11,27 @@
       ]"
     [Filters]="[
       ['id', 'id', dataUsers], 
-      ['nombre', 'comun', [{comun: 1, nombre:'Comun'}], 'postId']
+      ['nombre', 'comun', [{comun: 1, nombre:'Comun'}], 'postId'],
+      ['email', 'email', dataUsers], 
       ]"
     [activeSearchInputColumn]="true" 
     [activeSearchInputGlobal]="true"
-
       >
-  </app-tabla>
-</div>
+  </app-tabla> 
+  
+</div> 
+
+<!-- propiedades del componente --> 
+<!-- [DataTable] es la informacion que usaremos en la tabla, debe ser un array de objetos  -->
+
+<!-- [ColumnAndRowData] son los campos que mostrara nuestra nuestra tabla siendo la posicion 0 el titulo del encabezado de la columna y la    posicion 1 debera ser el valor que vamos a consumir de los objetos de nuestra tabla --> 
+
+<!-- [Filters] son los filtros que se aplicaran a la tabla y las posiciones seran las siguientes: 
+   * posicion 0 sera el valor que se renderizara en nuestro select 
+   * posicion 1 sera el valor que tendra el value  del select
+   * posicion 2 es la data del selector, debe ser un array de objetos y los valores deben coincidir con la posicion 0 y 1 del array
+   * posicion 3 es el valor por el cual vamos a filtrar en la data de la tabla (este valor es opcional, ya que normalmente la propiedad por la que vamos a filtrar tiene el mismo nombre que el value del select, pero en caso de que el nombre sea diferente agregamos el nombre de la propiedad en la posicion 3)  --> 
+
+<!-- [activeSearchInputColumn] valor boolenado para mostrar o esconder los searchInputs de los encabezados de las columnas --> 
+
+<!-- [activeSearchInputGlobal] valor booleando para mostrar o esconder el searchInput de la tabla en general -->

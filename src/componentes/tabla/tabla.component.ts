@@ -19,6 +19,9 @@ export class TablaComponent implements OnInit, OnChanges {
   // Pocision uno equivale al la propiedad que va consumir de la data
   @Input() public ColumnAndRowData: Array<string[]> = [];  
 
+  // array para renderizar las acciones
+  @Input() public Acciones: Array<String[]> = []; 
+
 
   // valores boleanos para renderizar los buscadores
   @Input() public activeSearchInputColumn: boolean = true;   
@@ -35,7 +38,9 @@ export class TablaComponent implements OnInit, OnChanges {
 
 
   // se crea un array secundario para que al momento de aplicar los filtros afectemos a este array y no al array principal que en este caso es la variable "DataTable"
-  public RenderDataTable: any[] = []
+  public RenderDataTable: any[] = []  
+  // se crea un array para almacenar los filtros de los selects
+  private filtersCache: {namePropiedad: string, value: string, idInputSelect: number}[] = [];
 
   constructor( 
     private tablaService: TablaServiceService
@@ -63,41 +68,34 @@ export class TablaComponent implements OnInit, OnChanges {
     }); 
 
     this.RenderDataTable = filterData
-  } 
-
-  private filtersCache: {namePropiedad: string, value: string}[] = [];  
+  }   
    
   handleSelectedFilter(e:Event, ValueSearch: string,){ 
-    let inputSelect = e.target as HTMLSelectElement; 
+    let inputSelect = e.target as HTMLSelectElement;  
+    let idInputSelect = parseInt(inputSelect.getAttribute('data-id') || '') 
+    console.log(inputSelect.getAttribute('data-id')); 
 
-    let validateExistProp = this.filtersCache.find((data)=> data.namePropiedad === ValueSearch)
-    if(!validateExistProp){ 
-      this.filtersCache.push({namePropiedad: ValueSearch, value: inputSelect.value});   
-    }else{  
-      console.log('reemplazando')
-      // reemplazar el valor del filtro anterior por el actual
-      this.filtersCache.forEach
+    // verificando si el filtro ya existe dentro del array
+    let findIndexFilter = this.filtersCache.findIndex(dataFilters=> dataFilters.idInputSelect === idInputSelect);
+
+    // si el filtro ya existe simplemente se reemplaza su valor, si no existe se hace un push al array de filtros
+    if(findIndexFilter !== -1){ 
+      this.filtersCache[findIndexFilter].value = inputSelect.value; 
+    }else{ 
+      this.filtersCache.push({namePropiedad: ValueSearch, value: inputSelect.value, idInputSelect: idInputSelect });
     }
-    // console.log(this.filtersCache)
 
+    // aplicando filtros
     let dataFilterRender = this.DataTable; 
-    this.filtersCache.forEach((dataFilters)=>{ 
+    this.filtersCache.forEach((dataFilters)=>{  
+      if(dataFilters.value === '') return
      dataFilterRender =  dataFilterRender.filter((dataRender) => { 
        return String(dataRender[dataFilters.namePropiedad]) === dataFilters.value 
       })
     });  
 
-    this.RenderDataTable = dataFilterRender
-
-
-
-
-    // console.log(ValueSearch); 
-
-    // let dataFilterSearch = this.DataTable.filter((dataRender)=>{   
-    //   return String(dataRender[ValueSearch]) === inputSelect.value 
-    // }); 
-
-    // this.RenderDataTable = dataFilterSearch
+    this.RenderDataTable = dataFilterRender;
   }
+
+
 }

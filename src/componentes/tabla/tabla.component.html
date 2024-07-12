@@ -20,8 +20,7 @@
         <div class="w-8/12 flex gap-3" > 
             @for (filter of Filters; track $index) { 
                 <select 
-                    name="" 
-                    id=""  
+                    [attr.data-id]="$index + 1" 
                     (change)="handleSelectedFilter($event,filter[3]? filter[3]: filter[1])"
                     class="border 
                     border-l 
@@ -29,13 +28,14 @@
                     rounded-md 
                     inputCustome 
                     bg-slate-200 
-                    p-2 w-full" >   
-                        <option value="" selected>Selecciona</option> 
-                    @for (dataFilter of filter[2]; track $index) {  
-                        <option [value]="dataFilter[filter[1]]"> 
-                            {{dataFilter[filter[0]]}}
-                        </option>
-                    }
+                    p-2 w-full">   
+
+                            <option value="" selected>Selecciona</option> 
+                        @for (dataFilter of filter[2]; track $index) {  
+                            <option [value]="dataFilter[filter[1]]"> 
+                                {{dataFilter[filter[0]]}}
+                            </option>
+                        }
                 </select> 
             } 
         </div>  
