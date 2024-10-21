@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TablaComponent } from "../componentes/tabla/tabla.component";
 import { TablaServiceService } from '../componentes/tabla/tabla-service.service';
-import { users } from '../types/users';
+import { fam } from '../types/users';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ import { users } from '../types/users';
 })
 export class AppComponent implements OnInit {
   title = 'componentes-din';  
-  public dataUsers: users[] =[];
+  public dataUsers: fam[] =[];
 
   constructor ( 
     private tablaService: TablaServiceService
@@ -22,8 +22,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     let res = await this.tablaService.getAllUsers();  
-    this.dataUsers = res as users[]; 
-    console.log(this.dataUsers); 
+    this.dataUsers = res as fam[];  
   }
 
 

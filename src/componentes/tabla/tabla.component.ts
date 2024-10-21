@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { TablaServiceService } from './tabla-service.service';
-import { users } from '../../types/users';
+// import { users } from '../../types/users';
 import { filter } from 'rxjs';
+import { fam } from '../../types/users';
 
 @Component({
   selector: 'app-tabla',
@@ -12,7 +13,7 @@ import { filter } from 'rxjs';
 })
 export class TablaComponent implements OnInit, OnChanges {  
 
-  private dataUsers: users[] =[]; 
+  private dataUsers: fam[] =[]; 
   @Input() public  DataTable: any[] = []  
   // [['NOMBRE','name']] 
   // Posicion cero equivale al nombre de la columna 
@@ -58,7 +59,8 @@ export class TablaComponent implements OnInit, OnChanges {
   async ngOnInit(): Promise<void> {   
   } 
 
-  searchDataOrColumn(dataName: string, e:Event){ 
+  searchDataOrColumn(dataName: string, e:Event){  
+    console.log(dataName);
     let eventInputText = e.target as HTMLInputElement  
 
     // validamos si existen concidencias con los buscadores

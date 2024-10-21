@@ -3,16 +3,14 @@
   <app-tabla 
     [DataTable]="dataUsers" 
     [ColumnAndRowData]="[  
-      ['Folio', 'id'],
-      ['Userid', 'postId'],
-      ['Nombre', 'name'], 
-      ['Email', 'email'], 
-      ['Body', 'body'],
+      ['fam', 'CVEFAM'],
+      ['fm', 'CVEMF'],
+      ['estatus', 'CveEstatus'],  
+      ['desfam', 'DESFAM']
       ]"
     [Filters]="[
-      ['id', 'id', dataUsers], 
-      ['nombre', 'comun', [{comun: 1, nombre:'Comun'}], 'postId'],
-      ['email', 'email', dataUsers], 
+      ['CVEFAM', 'CVEFAM', dataUsers], 
+      ['CVEMF', 'CVEMF', dataUsers]
       ]"
     [activeSearchInputColumn]="true" 
     [activeSearchInputGlobal]="true"

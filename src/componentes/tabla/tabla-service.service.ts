@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'; 
 import { HttpClient } from '@angular/common/http';
-import { users } from '../../types/users';
+import { fam, res } from '../../types/users';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +8,11 @@ import { users } from '../../types/users';
 export class TablaServiceService {
   constructor(private http: HttpClient) { } 
 
-  getAllUsers():Promise<users[] | undefined>{ 
+  getAllUsers():Promise<fam[] | undefined>{ 
     return new Promise((resolve, reject)=>{ 
-      this.http.get<users[]>('https://jsonplaceholder.typicode.com/posts/1/comments').subscribe({ 
-        next: (data)=>{  
-          resolve(data)
+      this.http.get<res>('http://localhost:4000/catalogo-familias').subscribe({ 
+        next: (data)=>{   
+          resolve(data['data'])
         },
         error:(err)=>{  
           resolve(undefined) 
